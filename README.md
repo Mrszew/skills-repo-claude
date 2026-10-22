@@ -1,7 +1,46 @@
-# Skills Repo — moje zestawienie
+# Skills Hub — moje zestawienie
 
 Lista repozytoriów, skilli i narzędzi przydatnych przy pracy z Claude Code i agentami AI.
 Każdy wpis: do czego służy, jak go użyć i **czy jest bezpieczny**.
+
+Repo jest jednocześnie **pluginem Claude Code** — po instalacji skill `skills-hub` jest dostępny
+w każdym projekcie, więc Claude zna ten katalog wszędzie.
+
+👉 **Katalog: [skills/skills-hub/CATALOG.md](skills/skills-hub/CATALOG.md)**
+
+## Instalacja (raz na komputer, działa we wszystkich projektach)
+
+```bash
+claude plugin marketplace add Mrszew/skills-repo-claude
+claude plugin install skills-hub@mrszew-hub --scope user
+```
+
+Aktualizacja po pushu nowych wpisów:
+
+```bash
+claude plugin marketplace update mrszew-hub
+```
+
+Użycie w dowolnym projekcie: zapytaj np. *„czy mam coś do generowania wideo?”*, *„czy X jest safe?”*,
+albo wywołaj `/skills-hub`.
+
+Tylko dla jednego projektu (zamiast user scope) — w danym repo:
+
+```bash
+claude plugin install skills-hub@mrszew-hub --scope project
+```
+
+## Struktura
+
+```
+.claude-plugin/
+  marketplace.json      # marketplace "mrszew-hub"
+  plugin.json           # plugin "skills-hub"
+skills/skills-hub/
+  SKILL.md              # instrukcje dla Claude
+  CATALOG.md            # tabela wszystkich wpisów
+  entries/              # szczegóły per narzędzie (+ _TEMPLATE.md)
+```
 
 ## Legenda bezpieczeństwa
 
@@ -12,18 +51,14 @@ Każdy wpis: do czego służy, jak go użyć i **czy jest bezpieczny**.
 | ❌ Unsafe | Nie używać / tylko w izolowanym środowisku (VM, sandbox) |
 | ❔ Niesprawdzone | Jeszcze nie zweryfikowane |
 
-## Zestawienie
-
-| Nazwa | Kategoria | Do czego | Bezpieczeństwo | Szczegóły |
-|-------|-----------|----------|----------------|-----------|
-| [skills.sh API](https://skills.sh/docs/api) | API / katalog skilli | Wyszukiwanie 600k+ skilli, szczegóły, audyt bezpieczeństwa | ✅ Safe | [entries/skills-sh-api.md](entries/skills-sh-api.md) |
-| [MoneyPrinterTurbo](https://github.com/harry0703/MoneyPrinterTurbo) | Generowanie wideo | Automatyczne short video z tematu (skrypt, footage, lektor, napisy) | ⚠️ Uważaj | [entries/moneyprinterturbo.md](entries/moneyprinterturbo.md) |
-
 ## Jak dodać nowy wpis
 
-1. Skopiuj [entries/_TEMPLATE.md](entries/_TEMPLATE.md) do `entries/<nazwa>.md`.
+1. Skopiuj [skills/skills-hub/entries/_TEMPLATE.md](skills/skills-hub/entries/_TEMPLATE.md) do `entries/<nazwa>.md`.
 2. Uzupełnij opis i sekcję bezpieczeństwa (checklista poniżej).
-3. Dodaj wiersz do tabeli **Zestawienie** powyżej.
+3. Dodaj wiersz do [CATALOG.md](skills/skills-hub/CATALOG.md).
+4. Push → `claude plugin marketplace update mrszew-hub`.
+
+Albo po prostu poproś Claude w dowolnym projekcie: *„dodaj X do mojego skills hub”*.
 
 ## Checklista bezpieczeństwa (przed instalacją skilla / repo)
 
