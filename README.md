@@ -6,7 +6,20 @@ Każdy wpis: do czego służy, jak go użyć i **czy jest bezpieczny**.
 Repo jest jednocześnie **pluginem Claude Code**. Każdy, kto ma dostęp do repo, może go zainstalować
 i Claude będzie polecał narzędzia z tego katalogu, zawsze z oceną bezpieczeństwa i odnośnikiem do wpisu.
 
-👉 **Katalog: [skills/skills-hub/CATALOG.md](skills/skills-hub/CATALOG.md)**
+👉 Pełny katalog z detalami: [skills/skills-hub/CATALOG.md](skills/skills-hub/CATALOG.md)
+
+## Skille w hubie
+
+| Nazwa | Do czego | Ocena | Na co uważać / czemu nie safe |
+|-------|----------|-------|-------------------------------|
+| [find-skills](skills/skills-hub/entries/find-skills.md) | Szukanie i instalacja skilli z skills.sh (`npx skills find`) | ✅ Safe | Sam skill to czysty tekst. Ale proponuje instalację `-g -y` (globalnie, bez pytania) — nie zgadzać się na auto-instalację, każdy znaleziony skill najpierw zweryfikować. |
+| [skills.sh API](skills/skills-hub/entries/skills-sh-api.md) | Katalog 600k+ skilli: szukanie, szczegóły, audyt bezpieczeństwa | ✅ Safe | Oficjalne API Vercela, tylko odczyt, token OIDC (bez stałego sekretu). To, że skill jest w katalogu, nie znaczy że jest bezpieczny — sprawdzać endpoint `audit`. |
+| [claude-red](skills/skills-hub/entries/claude-red.md) | ~100 skilli metodyki pentestu (web, AD, cloud, exploit-dev, wireless...) | ⚠️ Uważaj | **Dual-use ofensywny** — legalne tylko przy autoryzowanych testach (zgoda + scope). Domyślnie instaluje **globalnie** (dawać `--target ./.claude/skills`). Zawiera przykładowe payloady (`curl\|bash`, „ignore previous instructions”) — nie odpalać na ślepo. |
+| [MoneyPrinterTurbo](skills/skills-hub/entries/moneyprinterturbo.md) | Automatyczne short video z tematu (skrypt, footage, lektor, napisy) | ⚠️ Uważaj | **WebUI i API bez logowania** — nie wystawiać na sieć (każdy zużyje twoje klucze). Klucze API w `config.toml`. Paczka PyPI od osoby trzeciej (używać `mpt`). Tryb agenta pobiera instrukcje z sieci. Muzyka z YouTube = ryzyko praw autorskich. |
+
+> **Co znaczy ⚠️ Uważaj:** narzędzie jest zasadniczo OK i da się używać, ale ma konkretne ryzyka
+> (otwarte porty, klucze w plaintext, treść dual-use, zdalne instrukcje). Kolumna wyżej mówi, na co
+> patrzeć. Pełne uzasadnienie oceny jest w sekcji „Bezpieczeństwo” w każdym wpisie (`entries/<nazwa>.md`).
 
 ## Instalacja
 
