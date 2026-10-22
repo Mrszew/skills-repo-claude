@@ -3,32 +3,57 @@
 Lista repozytoriów, skilli i narzędzi przydatnych przy pracy z Claude Code i agentami AI.
 Każdy wpis: do czego służy, jak go użyć i **czy jest bezpieczny**.
 
-Repo jest jednocześnie **pluginem Claude Code** — po instalacji skill `skills-hub` jest dostępny
-w każdym projekcie, więc Claude zna ten katalog wszędzie.
+Repo jest jednocześnie **pluginem Claude Code**. Każdy, kto ma dostęp do repo, może go zainstalować
+i Claude będzie polecał narzędzia z tego katalogu, zawsze z oceną bezpieczeństwa i odnośnikiem do wpisu.
 
 👉 **Katalog: [skills/skills-hub/CATALOG.md](skills/skills-hub/CATALOG.md)**
 
-## Instalacja (raz na komputer, działa we wszystkich projektach)
+## Instalacja
+
+Wymaga [Claude Code](https://claude.com/claude-code). Repo jest publiczne, więc nie trzeba dostępu do konta.
+
+**Opcja A: dla siebie, we wszystkich projektach**
 
 ```bash
 claude plugin marketplace add Mrszew/skills-repo-claude
 claude plugin install skills-hub@mrszew-hub --scope user
 ```
 
-Aktualizacja po pushu nowych wpisów:
+**Opcja B: dla całego zespołu w konkretnym projekcie.** Dodaj do `.claude/settings.json` w repo projektu
+i zacommituj. Każdy, kto otworzy projekt w Claude Code, dostanie propozycję instalacji huba:
+
+```json
+{
+  "extraKnownMarketplaces": {
+    "mrszew-hub": {
+      "source": { "source": "github", "repo": "Mrszew/skills-repo-claude" }
+    }
+  },
+  "enabledPlugins": {
+    "skills-hub@mrszew-hub": true
+  }
+}
+```
+
+**Aktualizacja** (po nowych wpisach w repo), potem restart Claude Code:
 
 ```bash
 claude plugin marketplace update mrszew-hub
+claude plugin update skills-hub@mrszew-hub
 ```
 
-Użycie w dowolnym projekcie: zapytaj np. *„czy mam coś do generowania wideo?”*, *„czy X jest safe?”*,
-albo wywołaj `/skills-hub`.
+## Użycie
 
-Tylko dla jednego projektu (zamiast user scope) — w danym repo:
+Zapytaj w dowolnym projekcie, np. *„czy mam coś do generowania wideo?”*, *„czy X jest safe?”*,
+albo wywołaj `/skills-hub`. Claude odpowie w formacie:
 
-```bash
-claude plugin install skills-hub@mrszew-hub --scope project
-```
+> Z skills-hub: **MoneyPrinterTurbo** — generowanie short video z tematu. Ocena: ⚠️ Uważaj (WebUI bez autoryzacji, klucze w config.toml). Wpis: `entries/moneyprinterturbo.md`
+
+Zasady huba (w [SKILL.md](skills/skills-hub/SKILL.md)):
+- polecenia najpierw z katalogu, zawsze z oceną bezpieczeństwa i odnośnikiem do wpisu;
+- to, czego nie ma w hubie, Claude oznacza jako **niesprawdzone**;
+- narzędzia instaluje **tylko per projekt**, nigdy globalnie (chyba że wprost o to poprosisz);
+- nic oznaczonego ⚠️/❌ bez potwierdzenia.
 
 ## Struktura
 
@@ -56,9 +81,11 @@ skills/skills-hub/
 1. Skopiuj [skills/skills-hub/entries/_TEMPLATE.md](skills/skills-hub/entries/_TEMPLATE.md) do `entries/<nazwa>.md`.
 2. Uzupełnij opis i sekcję bezpieczeństwa (checklista poniżej).
 3. Dodaj wiersz do [CATALOG.md](skills/skills-hub/CATALOG.md).
-4. Push → `claude plugin marketplace update mrszew-hub`.
+4. Podbij `version` w [.claude-plugin/plugin.json](.claude-plugin/plugin.json) (np. 0.1.1 → 0.1.2), inaczej
+   zainstalowane kopie się nie odświeżą.
+5. Push (właściciel) albo fork + Pull Request (pozostali).
 
-Albo po prostu poproś Claude w dowolnym projekcie: *„dodaj X do mojego skills hub”*.
+Albo po prostu poproś Claude w dowolnym projekcie: *„dodaj X do skills hub”*.
 
 ## Checklista bezpieczeństwa (przed instalacją skilla / repo)
 

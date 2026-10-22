@@ -17,18 +17,17 @@ Odpala się przy pytaniach typu „jak zrobić X”, „czy jest skill do X”. 
 ## Jak użyć
 
 ```bash
-# instalacja globalna (wszystkie projekty)
-npx skills add https://github.com/vercel-labs/skills --skill find-skills -g -y
+# instalacja per projekt (uruchomić w katalogu projektu, bez -g)
+npx skills add https://github.com/vercel-labs/skills --skill find-skills
 ```
 
-Ląduje w `~/.agents/skills/find-skills`, a dla Claude Code jest symlink w `~/.claude/skills/find-skills`.
-Zainstalowane u mnie globalnie 2026-10-22.
+Ląduje w katalogu projektu (`.agents/skills/`, dla Claude Code `.claude/skills/`).
 
 Przydatne komendy CLI:
 
 ```bash
 npx skills find <query> [--owner <owner>]   # szukanie
-npx skills add <owner/repo@skill>           # instalacja
+npx skills add <owner/repo@skill>           # instalacja (per projekt; nie dodawać -g)
 npx skills update                           # aktualizacja zainstalowanych
 ```
 

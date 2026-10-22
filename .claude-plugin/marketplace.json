@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
   "name": "mrszew-hub",
-  "description": "Marcel's personal hub of vetted skills, repos and tools for Claude Code.",
+  "description": "Curated hub of vetted skills, repos and tools for Claude Code.",
   "owner": {
     "name": "Marcel Raszewski",
     "url": "https://github.com/Mrszew"
